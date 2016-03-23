@@ -1,4 +1,4 @@
-from evdev import InputDevice, list_devices, ecodes
+from evdev import InputDevice, list_devices, ecodes, categorize, AbsEvent
 import robot
 
 devices = [InputDevice(device) for device in list_devices()]
@@ -10,6 +10,10 @@ keypress_actions = {
     ecodes.KEY_S: robot.reverse,
     ecodes.KEY_A: robot.left,
     ecodes.KEY_D: robot.right,
+    ecodes.BTN_Y: robot.forward,
+    ecodes.BTN_A: robot.reverse,
+    ecodes.BTN_X: robot.left,
+    ecodes.BTN_B: robot.right,
 }
 
 try:
@@ -18,4 +22,3 @@ try:
       keypress_actions[event.code]()
 except KeyboardInterrupt:
     robot.stop()
-        
