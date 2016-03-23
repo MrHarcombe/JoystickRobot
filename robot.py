@@ -25,15 +25,19 @@ prr.start(0)
 
 def right(power=100):
   if power > 0:
+      pfl.ChangeDutyCycle(0)
       prl.ChangeDutyCycle(power)
   else:
       pfl.ChangeDutyCycle(-power)
+      prl.ChangeDutyCycle(0)
 
 def left(power=100):
   if power > 0:
+      pfr.ChangeDutyCycle(0)
       prr.ChangeDutyCycle(power)
   else:
       pfr.ChangeDutyCycle(-power)
+      prr.ChangeDutyCycle(0)
 
 def stop():
   pfl.ChangeDutyCycle(0)
