@@ -14,31 +14,35 @@ motors = [fwdleft,fwdright,revleft,revright]
 for item in motors:
 	GPIO.setup(item, GPIO.OUT)
 
-def forward(power=100):
-	GPIO.output(fwdright, True)
-	GPIO.output(fwdleft, True)
+pfl = GPIO.PWM(fwdleft, 50)
+pfr = GPIO.PWM(fwdright, 50)
+prl = GPIO.PWM(revleft, 50)
+prr = GPIO.PWM(revright, 50)
+pfl.start(0)
+pfr.start(0)
+prl.start(0)
+prr.start(0)
 
 def right(power=100):
-	GPIO.output(revright, True)
-	GPIO.output(fwdleft, True)
+  if power > 0:
+      prl.ChangeDutyCycle(power)
+  else:
+      pfl.ChangeDutyCycle(-power)
 
 def left(power=100):
-	GPIO.output(fwdright, True)
-	GPIO.output(revleft, True)
-
-def reverse(power=100):
-	GPIO.output(revleft, True)
-	GPIO.output(revright, True)
+  if power > 0:
+      prr.ChangeDutyCycle(power)
+  else:
+      pfr.ChangeDutyCycle(-power)
 
 def stop():
-	GPIO.output(revleft, False)
-	GPIO.output(revright, False)
-	GPIO.output(fwdright, False)
-	GPIO.output(fwdleft, False)
+  pfl.ChangeDutyCycle(0)
+  pfr.ChangeDutyCycle(0)
+  prl.ChangeDutyCycle(0)
+  prr.ChangeDutyCycle(0)
 
 try:
 	print("R E A D Y")
 except KeyboardInterrupt:
 	print("E X I T")
 	GPIO.cleanup()
-        #
