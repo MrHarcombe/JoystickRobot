@@ -1,21 +1,6 @@
 from evdev import InputDevice, list_devices, ecodes
 import robot
 
-devices = [InputDevice(device) for device in list_devices()]
-keyboard = devices[0]
-print(keyboard)
-
-keypress_actions = {
-    ecodes.ABS_X: store_x,
-    ecodes.ABS_Y: store_y
-}
-
-current_x = 0
-current_y = 0
-
-power_l = 0
-power_r = 0
-
 def store_x(value):
     current_x = value;
   
@@ -34,6 +19,21 @@ def update_motor_powers():
     power_r = limit_value((current_y / 32768 * 100) - (current_x / 32768 * 100))
     robot.left (power_l)
     robot.right(power_r)
+
+devices = [InputDevice(device) for device in list_devices()]
+keyboard = devices[0]
+print(keyboard)
+
+keypress_actions = {
+    ecodes.ABS_X: store_x,
+    ecodes.ABS_Y: store_y
+}
+
+current_x = 0
+current_y = 0
+
+power_l = 0
+power_r = 0
 
 try:
     #with open("values.log", "w") as log:
